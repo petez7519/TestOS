@@ -22,7 +22,6 @@ workflows:
   fan-in-fan-out:
     jobs:
       - job1
-      - job2:
-          requires:
-            - job1
+      - job2
+
 
