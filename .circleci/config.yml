@@ -12,7 +12,9 @@ jobs:
       - run:
           name: Install Vault and setup demo
           command: |
-            brew install vault
+            brew tap hashicorp/tap
+            brew install hashicorp/tap/vault
+            vault
             vault server -dev -dev-root-token-id=root &
             sleep 2 # Give time for Vault to start
 
