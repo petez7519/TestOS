@@ -2,8 +2,42 @@ version: 2.1
 
 jobs:
   build:
+    macos:
+      xcode: 12.5.1  # Adjust the Xcode version as needed
+
+    steps:
+      - checkout
+
+      # Install Vault
+      - run:
+          name: Install Vault
+          command: |
+            brew install vault
+
+      # Start Vault in demo mode
+      - run:
+          name: Start Vault in demo mode
+          command: |
+            vault server -dev -dev-root-token-id=root -dev-listen-address=127.0.0.1:8200 &
+
+      # Verify Vault status
+      - run:
+          name: Verify Vault status
+          command: |
+            sleep 5  # Wait for Vault to start
+            vault status
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+version: 2.1
+
+jobs:
+  build:
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.12.1
 
     steps:
       - checkout
@@ -13,7 +47,7 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt-get update
-            sudo apt-get install -y <your_dependencies_here>
+            sudo apt-get install -y 
 
       # Run tests
       - run:
