@@ -2,21 +2,18 @@ version: 2.1
 
 jobs:
   build:
-    macos:
-      xcode: "12.5.1"
+    docker:
+      - image: mysql:latest
+        environment:
+          MYSQL_ROOT_PASSWORD: root_password
 
     steps:
       - checkout
 
-      # Install and setup Vault in demo mode
-      - run:
-          name: Install Vault and setup demo
-          command: |
-            brew install vault
-            vault server -dev -dev-root-token-id=root &
-            sleep 2 # Give time for Vault to start
+      # Install any required dependencies or run tests
+      # Replace this with your specific build steps
 
-      # Add more steps as needed for your build process
+  # Add more jobs or steps as needed
 
 workflows:
   version: 2
