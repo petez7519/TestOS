@@ -1,15 +1,28 @@
 version: 2.1
 
 jobs:
-  build:
-    macos:
-      xcode: "12.0.0" # specify the Xcode version
+  job1:
+    docker:
+      - image: alpine:latest
     steps:
       - run:
-          name: Check OS Type
-          command: |
-            if [ "$(uname)" == "Darwin" ]; then
-              echo "This is a macOS operating system."
-            else
-              echo "This is not a macOS operating system."
-            fi
+          name: Step 1
+          command: echo "This is job 1."
+
+  job2:
+    docker:
+      - image: alpine:latest
+    steps:
+      - run:
+          name: Step 1
+          command: echo "This is job 2."
+
+workflows:
+  version: 2
+  fan-in-fan-out:
+    jobs:
+      - job1
+      - job2:
+          requires:
+            - job1
+
