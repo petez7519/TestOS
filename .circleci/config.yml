@@ -1,0 +1,15 @@
+version: 2.1
+
+jobs:
+  build:
+    macos:
+      xcode: "12.0.0" # specify the Xcode version
+    steps:
+      - run:
+          name: Check OS Type
+          command: |
+            if [ "$(uname)" == "Darwin" ]; then
+              echo "This is a macOS operating system."
+            else
+              echo "This is not a macOS operating system."
+            fi
