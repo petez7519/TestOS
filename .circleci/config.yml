@@ -1,26 +1,13 @@
 version: 2.1
+
 jobs:
   build:
     docker:
-      - image: circleci/mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: root
+      - image: ubuntu:latest
     steps:
-      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
-          name: Wait for MySQL to start
+          name: Run some commands
           command: |
-            while ! mysqladmin ping -h"127.0.0.1" --silent; do
-              sleep 1
-            done
-      - run:
-          name: Create Database and Table
-          command: |
-            mysql -uroot -proot -e "CREATE DATABASE my_database;"
-            mysql -uroot -proot -e "USE my_database; CREATE TABLE my_table (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255));"
-
-workflows:
-  version: 2
-  build_and_create_table:
-    jobs:
-      - build
+            echo 'Hello from the Docker container!'
